@@ -1,68 +1,49 @@
-package com.luct.minal.myapplication;
+package com.luct.minal.theportal;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+public class MainActivity extends Activity {
 
+    private EditText  username=null;
+    private EditText  password=null;
 
-public class MyActivity extends ActionBarActivity {
-
-    private EditText emailEditText;
-    private EditText passEditText;
-    private Button registerButton;
+    private Button loginbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_main);
+        username = (EditText)findViewById(R.id.Username);
+        password = (EditText)findViewById(R.id.Password);
 
-        emailEditText = (EditText) findViewById(R.id.email_edit_Text);
-        passEditText = (EditText) findViewById(R.id.edit_text_password);
-        registerButton = (Button) findViewById(R.id.register_button);
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                final String email = emailEditText.getText().toString();
-                final String password = passEditText.getText().toString();
-                if (!isValidEmail(email)) {
-                    emailEditText.setError("Invalid Email");
-                    emailEditText.requestFocus();
-                } else if (!isValidPassword(password)) {
-                    passEditText.setError("Invalid Password");
-                    passEditText.requestFocus();
-                } else {
-                    Toast.makeText(view.getContext(), "You have created account successfully !!",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+        loginbutton = (Button)findViewById(R.id.imageButton3);
     }
 
-    // validating email id
-    private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
-    // validating password with retype password
-    private boolean isValidPassword(String pass) {
-        if (pass != null && pass.length() > 6) {
-            return true;
+    public void login(View view){
+        if(username.getText().toString().equals("admin") &&
+                password.getText().toString().equals("admin")){
+            Toast.makeText(getApplicationContext(), "Redirecting...",
+                    Toast.LENGTH_SHORT).show();
         }
-        return false;
+        else{
+            Toast.makeText(getApplicationContext(), "Wrong Credentials",
+                    Toast.LENGTH_SHORT).show();
+//nochanges
+
+
+
+        }
+
     }
+
+
 }
