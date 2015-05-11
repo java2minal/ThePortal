@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends Activity {
 
     private EditText  username=null;
@@ -26,23 +29,46 @@ public class MainActivity extends Activity {
 
 
         loginbutton = (Button)findViewById(R.id.imageButton3);
+        loginbutton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                final String email = username.getText().toString();
+                final String password = password.getText().toString();
+                if (!isValidEmail(email)) {
+                    username.setError("Invalid username");
+                    username.requestFocus();
+                } else if (!isValidPassword(password)) {
+                    password.setError("Invalid Password");
+                    password.requestFocus();
+                } else {
+                    Toast.makeText(view.getContext(), "You have logged in successfully !!",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 
-    public void login(View view){
-        if(username.getText().toString().equals("admin") &&
-                password.getText().toString().equals("admin")){
-            Toast.makeText(getApplicationContext(), "Redirecting...",
-                    Toast.LENGTH_SHORT).show();
+    // validating email id
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    // validating password with retype password
+    private boolean isValidPassword(String pass) {
+        if (pass != null && pass.length() > 6) {
+            return true;
         }
-        else{
-            Toast.makeText(getApplicationContext(), "Wrong Credentials",
-                    Toast.LENGTH_SHORT).show();
-//nochanges
-
-
-
-        }
-
+        return false;
+    }
+}
     }
 
 
