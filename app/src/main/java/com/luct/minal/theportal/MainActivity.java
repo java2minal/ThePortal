@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements OnClickListener {
         button = (ImageButton)findViewById(R.id.imageButton);
         button.setOnClickListener(this);
     }
-
+//check
     @Override
     public void onClick(View v) {
         Effects.getInstance().playSound(Effects.SOUND_1);
